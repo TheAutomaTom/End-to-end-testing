@@ -1,5 +1,5 @@
-using E2E.Api.Data;
 using E2E.Api.Models;
+using E2E.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E2E.Api.Controllers

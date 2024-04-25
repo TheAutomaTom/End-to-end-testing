@@ -1,5 +1,5 @@
 using E2E.Api;
-using E2E.Api.Data;
+using E2E.Api.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -31,6 +31,7 @@ public sealed class StartupTests
     public MyStartup(IConfiguration config) : base(config) {
 
       Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Test");
+
 
     }
   }

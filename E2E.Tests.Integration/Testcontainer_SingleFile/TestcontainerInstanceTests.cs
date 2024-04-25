@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using Testcontainers.MsSql;
-using static TestcontainersModules.StartupTests;
 
-namespace E2E.Tests.Integration
+namespace E2E.Tests.Integration.Testcontainer_SingleFile
 {
   /// <summary> This test does not require any outside setup to connect to a containerized database. </summary>
   public class TestcontainerInstanceTests : IAsyncLifetime
@@ -15,7 +12,9 @@ namespace E2E.Tests.Integration
     [Fact]
     public async Task ReadFromMsSqlDatabase()
     {
-      await using var connection = new SqlConnection(_msSqlContainer.GetConnectionString());
+
+      var cs = _msSqlContainer.GetConnectionString();
+      await using var connection = new SqlConnection(cs);
       await connection.OpenAsync();
 
       await using var command = connection.CreateCommand();

@@ -13,7 +13,16 @@ namespace E2E.Api.Data
     public ForecastDbContext(IConfiguration config, DbContextOptions<ForecastDbContext> options) : base(options)
     {
       _config = config;
-      _connectionString = $"{_config.GetConnectionString("DockerDb")}";
+      var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+      if ( env == "Test")
+      {
+        _connectionString = Environment.GetEnvironmentVariable("TestcontainerCS");
+      } 
+      else 
+      {
+        _connectionString = $"{_config.GetConnectionString("TypicalConnectionString")}";
+      }
 
 
       try

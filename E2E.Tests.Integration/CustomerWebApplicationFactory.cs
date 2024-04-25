@@ -20,9 +20,10 @@ namespace E2E.Tests.Integration
     {
       base.ConfigureWebHost(builder);
 
-      builder.ConfigureTestServices(services => { 
+      builder.ConfigureTestServices(services => {
         // Override typical behavior here...
-      
+        Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Test");
+
       });
     }
 

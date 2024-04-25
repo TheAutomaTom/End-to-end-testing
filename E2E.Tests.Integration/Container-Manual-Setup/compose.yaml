@@ -1,0 +1,11 @@
+services:
+   Mssql:
+       image: mcr.microsoft.com/mssql/server:2019-latest
+       container_name: Mssql_E2E_Tests
+       # restart: always
+       environment:
+           - ACCEPT_EULA=true
+           - MSSQL_PID=Developer
+           - SA_PASSWORD=Passw0rt!
+       ports:
+           - 1433:1433

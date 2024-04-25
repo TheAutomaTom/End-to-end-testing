@@ -9,7 +9,10 @@ public sealed partial class StartupTests
   {
     public TestStartupBootstrap(IConfiguration config) : base(config) {
 
-      Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Test");
+      // This will be overriden by ForecastControllerTests' constructor setting the env to "ForecastControllerTest"
+      Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "TestStartupBootstrap");
+
+
 
 
     }

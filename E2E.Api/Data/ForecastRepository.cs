@@ -16,10 +16,10 @@ namespace E2E.Api.Data
     }
 
 
-    public async Task<bool> SaveForecast(WeatherForecast input, CancellationToken ct)
+    public async Task<bool> SaveForecast(WeatherForecast input)
     {
       _context.WeatherForecasts.Add(input);
-      return await _context.SaveChangesAsync(ct) == 1;
+      return await _context.SaveChangesAsync() == 1;
 
     }
 

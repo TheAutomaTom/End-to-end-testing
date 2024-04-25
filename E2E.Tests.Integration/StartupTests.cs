@@ -17,8 +17,11 @@ public sealed partial class StartupTests
     var webHost = Microsoft.AspNetCore.WebHost.CreateDefaultBuilder().UseStartup<TestStartupBootstrap>().Build();
 
     Assert.NotNull(webHost);
-    Assert.NotNull(webHost.Services.GetRequiredService<IForecastGenerator>());
+
+    // This is set in TestStartupBootstrap's constructor.
     Assert.Equal("Test", Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+
+    Assert.NotNull(webHost.Services.GetRequiredService<IForecastGenerator>());
     Assert.NotNull(webHost.Services.GetRequiredService<IForecastGenerator>());
     Assert.Equal(typeof(ForecastGenerator), webHost.Services.GetRequiredService<IForecastGenerator>().GetType());
 

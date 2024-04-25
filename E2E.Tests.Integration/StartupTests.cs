@@ -19,12 +19,18 @@ public sealed class StartupTests
     var webHost = Microsoft.AspNetCore.WebHost.CreateDefaultBuilder().UseStartup<MyStartup>().Build();
     Assert.NotNull(webHost);    
     Assert.NotNull(webHost.Services.GetRequiredService<IForecastGenerator>());
+    Assert.Equal("Test", Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+
   }
 
 
   public class MyStartup : Startup
   {
-    public MyStartup(IConfiguration config) : base(config) { }
+    public MyStartup(IConfiguration config) : base(config) {
+
+      Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Test");
+
+    }
   }
 
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using E2E.Api.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +33,10 @@ namespace E2E.Api
       {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApplication1", Version = "v1" });
       });
+
+      IServiceCollection serviceCollection = services.AddSingleton<IForecastGenerator, ForecastGenerator>();
+
+
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

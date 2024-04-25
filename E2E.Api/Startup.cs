@@ -43,10 +43,11 @@ namespace E2E.Api
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApplication1", Version = "v1" });
       });
 
-      services.AddSingleton<IForecastGenerator, ForecastGenerator>();
-      services.AddSingleton<IForecastRepository, ForecastRepository>();
-
       services.AddDbContext<ForecastDbContext>(o => o.UseSqlServer());
+
+      services.AddScoped<IForecastGenerator, ForecastGenerator>();
+      services.AddScoped<IForecastRepository, ForecastRepository>();
+
 
 
 

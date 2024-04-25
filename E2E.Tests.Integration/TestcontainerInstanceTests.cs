@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Data.SqlClient;
 using Testcontainers.MsSql;
+using static TestcontainersModules.StartupTests;
 
 namespace E2E.Tests.Integration
 {
@@ -12,6 +10,7 @@ namespace E2E.Tests.Integration
   public class TestcontainerInstanceTests : IAsyncLifetime
   {
     readonly MsSqlContainer _msSqlContainer = new MsSqlBuilder().Build();
+
 
     [Fact]
     public async Task ReadFromMsSqlDatabase()

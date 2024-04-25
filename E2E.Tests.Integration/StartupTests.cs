@@ -20,6 +20,8 @@ public sealed class StartupTests
     Assert.NotNull(webHost);    
     Assert.NotNull(webHost.Services.GetRequiredService<IForecastGenerator>());
     Assert.Equal("Test", Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+    Assert.NotNull(webHost.Services.GetRequiredService<IForecastGenerator>());
+    Assert.Equal(typeof(ForecastGenerator), webHost.Services.GetRequiredService<IForecastGenerator>().GetType());
 
   }
 

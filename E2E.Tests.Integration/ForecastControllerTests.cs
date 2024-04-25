@@ -1,12 +1,14 @@
 ﻿using System.Text;
 using System.Text.Json;
 using E2E.Api.Models;
-using E2E.Api.Services;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Testcontainers.MsSql;
-using static TestcontainersModules.StartupTests;
+using static E2E.Tests.Integration.StartupTests;
+using E2E.Api.Deprecated;
+using System.Net.WebSockets;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace E2E.Tests.Integration
 {
@@ -15,6 +17,7 @@ namespace E2E.Tests.Integration
     CustomWebApplicationFactory _factory;
     HttpClient _client;
     MsSqlContainer _msSqlContainer;
+    Random _rando = new Random();
 
     public ForecastControllerTests()
     {
@@ -42,20 +45,6 @@ namespace E2E.Tests.Integration
     }
 
 
-    [Fact]
-    public async Task Get_ReturnsForecasts()
-    {
-      var response = await _client.GetAsync("/WeatherForecast");
-      response.EnsureSuccessStatusCode();
-
-      var content = await response.Content.ReadAsStringAsync();
-      var forecasts =  JsonSerializer.Deserialize<IEnumerable<WeatherForecast>>(content);
-
-      Assert.NotNull(forecasts);
-      Assert.True(forecasts.Count() > 0);
-
-    }
-
 
     [Fact]
     public async Task Post_PostsForecast()
@@ -70,10 +59,32 @@ namespace E2E.Tests.Integration
       var content = await response.Content.ReadAsStringAsync();
 
       Assert.Equal("true", content);
-      //Assert.True(forecasts.Count() > 0);
 
     }
 
+
+    public async Task GetWorksAfterPosts()
+    {
+      var generator = _factory.Services.GetRequiredService<IForecastGenerator>();
+
+      var toPost = generator.Generate();
+
+      foreach (var forecast in toPost)
+      {
+        var jsonContent = new StringContent(JsonSerializer.Serialize(forecast), Encoding.UTF8, "application/json");
+        var res = await _client.PostAsync("/WeatherForecast", jsonContent);
+        res.EnsureSuccessStatusCode();
+      }
+
+      var response = await _client.GetAsync("/WeatherForecast");
+      response.EnsureSuccessStatusCode();
+
+      var content = await response.Content.ReadAsStringAsync();
+      var forecasts = JsonSerializer.Deserialize<IEnumerable<WeatherForecast>>(content);
+
+      Assert.NotNull(forecasts);
+      Assert.Equal(toPost.Count(), forecasts.Count());
+    }
 
 
 

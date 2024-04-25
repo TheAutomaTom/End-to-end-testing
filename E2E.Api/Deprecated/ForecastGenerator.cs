@@ -1,6 +1,7 @@
 ﻿using E2E.Api.Models;
+using E2E.Api.Deprecated;
 
-namespace E2E.Api.Services
+namespace E2E.Api.Deprecated
 {
     public class ForecastGenerator : IForecastGenerator
     {

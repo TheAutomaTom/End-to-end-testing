@@ -1,10 +1,10 @@
-using E2E.Api.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
 using Testcontainers.MsSql;
+using E2E.Api.Deprecated;
 
-namespace TestcontainersModules;
+namespace E2E.Tests.Integration;
 
 public sealed partial class StartupTests
 {
@@ -19,7 +19,7 @@ public sealed partial class StartupTests
     Assert.NotNull(webHost);
 
     // This is set in TestStartupBootstrap's constructor.
-    Assert.Equal("Test", Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+    Assert.Equal("TestStartupBootstrap", Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
 
     Assert.NotNull(webHost.Services.GetRequiredService<IForecastGenerator>());
     Assert.NotNull(webHost.Services.GetRequiredService<IForecastGenerator>());

@@ -1,6 +1,5 @@
 using E2E.Api.Data;
 using E2E.Api.Models;
-using E2E.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E2E.Api.Controllers
@@ -10,22 +9,26 @@ namespace E2E.Api.Controllers
   public class WeatherForecastController : ControllerBase
   {
     readonly ILogger<WeatherForecastController> _logger;
-    readonly IForecastGenerator _forecaster;
     readonly IForecastRepository _repo;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger, IForecastGenerator forecaster, IForecastRepository repo)
+    public WeatherForecastController(ILogger<WeatherForecastController> logger, IForecastRepository repo)
     {
       _logger = logger;
-      _forecaster = forecaster;
       _repo = repo;
     }
 
 
 
     [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
+    public async Task<IActionResult> Get()
     {
-      return _forecaster.Generate();
+      var result = await _repo.Get();
+      if (result.Any())
+      {
+        return Ok(result);
+      }
+        return NoContent();
+
     }
 
 

@@ -1,4 +1,5 @@
 ﻿using E2E.Api.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace E2E.Api.Data
 {
@@ -20,6 +21,13 @@ namespace E2E.Api.Data
     {
       _context.WeatherForecasts.Add(input);
       return await _context.SaveChangesAsync() == 1;
+
+    }
+
+    public async Task<IEnumerable<WeatherForecast>> Get()
+    {
+
+     return await _context.WeatherForecasts.ToListAsync();
 
     }
 

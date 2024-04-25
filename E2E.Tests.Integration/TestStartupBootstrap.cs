@@ -1,7 +1,7 @@
 ﻿using E2E.Api;
 using Microsoft.Extensions.Configuration;
 
-namespace TestcontainersModules;
+namespace E2E.Tests.Integration;
 
 public sealed partial class StartupTests
 {

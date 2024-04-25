@@ -1,0 +1,6 @@
+@E2E.Api_HostAddress = http://localhost:5182
+
+GET {{E2E.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

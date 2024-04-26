@@ -24,7 +24,6 @@ namespace E2E.Tests.Integration.Api_to_Testcontainer_Tests
             var cs = _msSqlContainer.GetConnectionString();
             Environment.SetEnvironmentVariable("TestcontainerCS", cs);
 
-            // This called Startup again, but not through `TestStartupBootstrap`... but it still saves the env setting of "Test".
             _client = _factory.CreateClient();
 
         }
